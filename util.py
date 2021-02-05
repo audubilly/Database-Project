@@ -121,17 +121,17 @@ def update_account():
     connection.close()
 
 
-# def delete_account_details():
-#     accountNumber = int(input("Enter account Number: "))
-#     customer_id_query = f'select customerId from account where accountNumber = {accountNumber}'
-#     connection = initialize_database()
-#     cursor = connection.cursor()
-#     cursor.execute(customer_id_query)
-#     result = cursor.fetchone()
-#     customer_Id = result[0]
-#     delete_account_query = 'Delete from account where accountNumber = %s'
-#     delete_customer_query = 'Delete from customer where customerId = %s'
-#     cursor.execute(delete_account_query, (accountNumber,))
-#     cursor.execute(delete_customer_query, (customer_Id,))
-#     connection.commit()
-#     connection.close()
+def delete_account_details():
+    accountNumber = int(input("Enter account Number: "))
+    customer_id_query = f'select customerId from account where accountNumber = {accountNumber}'
+    connection = initialize_database()
+    cursor = connection.cursor()
+    cursor.execute(customer_id_query)
+    result = cursor.fetchone()
+    customer_Id = result[0]
+    delete_account_query = 'Delete from account where accountNumber = %s'
+    delete_customer_query = 'Delete from customer where customerId = %s'
+    cursor.execute(delete_account_query, (accountNumber,))
+    cursor.execute(delete_customer_query, (customer_Id,))
+    connection.commit()
+    connection.close()
