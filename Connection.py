@@ -44,7 +44,7 @@ def create_table():
         firstName VARCHAR(50) not null,
         LastName VARCHAR(50) not null,
         middleName VARCHAR(50),
-        mobileNumber INTEGER(11) UNIQUE,
+        mobileNumber VARCHAR (11) UNIQUE,
         occupation VARCHAR(90),
         date_of_birth DATE,
         constraint  customer_pk PRIMARY KEY(customerId)
@@ -58,7 +58,7 @@ def create_table():
             accountStatus VARCHAR (40),
             accountOpeningDate DATE DEFAULT(CURRENT_DATE ),
             constraint account_pk  PRIMARY KEY(accountNumber),
-            constraint account_fk FOREIGN KEY(customerId) references Customer(customerId)
+            constraint account_fk FOREIGN KEY(customerId) references Customer(customerId) on delete cascade 
             );
         ''',
         '''
@@ -70,7 +70,7 @@ def create_table():
            transactionAmount INTEGER not null,
            transactionMedium VARCHAR (40) not null,
            constraint transactions_pk PRIMARY KEY (transactionId),
-           constraint transaction_fk FOREIGN KEY (accountNumber) references Account(accountNumber)) 
+           constraint transaction_fk FOREIGN KEY (accountNumber) references Account(accountNumber) on delete cascade ) 
         ''']
     for query in queries:
         conn.cursor().execute(query)
