@@ -1,13 +1,11 @@
-from dotenv import load_dotenv
+import getpass
 import mysql.connector
 from mysql.connector import Error
 import os
 
-load_dotenv()
-
-db_username = os.getenv("databaseUser")
-db_password = os.getenv("databasePassword")
-db_databaseName = os.getenv("databaseName")
+username_str = input("Enter your username: ")
+password_str = getpass.win_getpass()
+db_name = input("Enter db name: ")
 
 conn = None
 
@@ -17,14 +15,14 @@ def initialize_connection():
         global conn
         conn = mysql.connector.connect(
             host='localhost',
-            user=db_username,
-            password=db_password
+            user=username_str,
+            password=password_str
         )
         print("connection successful")
         if conn.is_connected():
-            sql = f'CREATE DATABASE IF NOT EXISTS {db_databaseName}'
+            sql = f'CREATE DATABASE IF NOT EXISTS {db_name}'
             conn.cursor().execute(sql)
-            print(f"{db_databaseName} created successfully")
+            print(f"{db_name} created successfully")
             return conn
     except Error as connection_error:
         print("connection failed due to connection error", connection_error)
@@ -75,7 +73,3 @@ def create_table():
     for query in queries:
         conn.cursor().execute(query)
 
-
-def use_database():
-    sql = f'use {db_databaseName}'
-    conn.cursor().execute(sql)
